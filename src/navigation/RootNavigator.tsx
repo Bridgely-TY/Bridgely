@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from './types';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import ChildProfileScreen from '../screens/ChildProfileScreen';
+import DailyCommunicationScreen from '../screens/DailyCommunicationScreen';
+import PersonalizeScreen from '../screens/PersonalizeScreen';
 import CaregiverScreen from '../screens/CaregiverScreen';
 import ChildScreen from '../screens/ChildScreen';
 import BoardViewScreen from '../screens/BoardViewScreen';
@@ -19,7 +22,10 @@ export default function RootNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Onboarding">
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ title: 'Bridgely' }} />
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ChildProfile" component={ChildProfileScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="DailyCommunication" component={DailyCommunicationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Personalize" component={PersonalizeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Caregiver" component={CaregiverScreen} options={{ title: 'Caregiver' }} />
         <Stack.Screen name="Child" component={ChildScreen} options={{ title: 'Child Mode' }} />
         <Stack.Screen name="BoardView" component={BoardViewScreen} options={{ title: 'Board' }} />

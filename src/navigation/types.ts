@@ -8,6 +8,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
  */
 export type RootStackParamList = {
   Onboarding: undefined;
+  ChildProfile: undefined;
+  DailyCommunication: undefined;
+  Personalize: undefined;
   Caregiver: undefined;
   Child: undefined;
   BoardView: { boardId: string };
