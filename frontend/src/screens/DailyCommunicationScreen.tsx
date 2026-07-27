@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Pressable,
-  TextInput,
   ScrollView,
   StatusBar,
 } from 'react-native';
@@ -16,7 +15,6 @@ import BrandLogo from '../components/BrandLogo';
 import FieldLabel from '../components/FieldLabel';
 import SelectableChip from '../components/SelectableChip';
 
-const CAREGIVER_TYPES = ['Parent', 'Therapist', 'Teacher', 'Other'];
 const USAGE_CONTEXTS = ['Home', 'School', 'Therapy', 'All of the Above'];
 const CHALLENGES = [
   'Asking for Food', 'Expressing Emotions', 'Saying Yes/No',
@@ -34,8 +32,6 @@ const MAX_CHALLENGES = 3;
 export default function DailyCommunicationScreen({
   navigation,
 }: ScreenProps<'DailyCommunication'>) {
-  const [caregiverType, setCaregiverType] = useState('Parent');
-  const [otherCaregiver, setOtherCaregiver] = useState('');
   const [usageContext, setUsageContext] = useState('All of the Above');
   const [challenges, setChallenges] = useState<string[]>([
     'Expressing Emotions', 'Asking for Help', 'Social Interaction',
@@ -78,32 +74,7 @@ export default function DailyCommunicationScreen({
         </Text>
 
         <View style={styles.card}>
-          {/* Caregiver type */}
-          <FieldLabel
-            label="Who will use Bridgely with your child most often?"
-            required
-            helper="We will optimize the workspace setups for this caregiver type"
-          />
-          <View style={styles.chipWrap}>
-            {CAREGIVER_TYPES.map((t) => (
-              <SelectableChip
-                key={t}
-                label={t}
-                selected={caregiverType === t}
-                onPress={() => setCaregiverType(t)}
-              />
-            ))}
-          </View>
-          <TextInput
-            style={[styles.input, { marginTop: 14 }]}
-            placeholder="e.g. Grandparent, Sibling, Nanny..."
-            placeholderTextColor={colors.placeholder}
-            value={otherCaregiver}
-            onChangeText={setOtherCaregiver}
-          />
-
           {/* Usage context */}
-          <View style={styles.fieldSpacer} />
           <FieldLabel
             label="When will they use it most?"
             required
@@ -147,7 +118,7 @@ export default function DailyCommunicationScreen({
           style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
           onPress={() => navigation.navigate('Personalize')}
         >
-          <Text style={styles.ctaText}>Continue to Step 4</Text>
+          <Text style={styles.ctaText}>Continue to Step 3</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -205,17 +176,6 @@ const styles = StyleSheet.create({
   },
 
   fieldSpacer: { height: 24 },
-
-  input: {
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 15,
-    color: colors.textPrimary,
-    backgroundColor: colors.card,
-  },
 
   chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 12 },
 
