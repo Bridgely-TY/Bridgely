@@ -2,23 +2,20 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScreenProps } from '../navigation/types';
 import { Cell } from '../types';
-import { getCells } from '../api/mockApi';
+import { getCell } from '../../../backend';
 
-/**
- * Cell editor (placeholder) — caregiver-facing.
- *
- * Real implementation will expose fields for label, spoken phrase, image,
- * category, color, cell type, and destination board.
- */
+// cell editor placeholder
 export default function CellEditorScreen({ route }: ScreenProps<'CellEditor'>) {
-  const { boardId, cellId } = route.params;
+  const { cellId } = route.params;
   const [cell, setCell] = useState<Cell | null>(null);
 
   useEffect(() => {
     if (cellId) {
-      getCells(boardId).then((cells) => setCell(cells.find((c) => c.id === cellId) ?? null));
+      getCell(cellId)
+        .then(setCell)
+        .catch((err) => console.warn('[Bridgely] Failed to load cell:', err));
     }
-  }, [boardId, cellId]);
+  }, [cellId]);
 
   return (
     <View style={styles.container}>
