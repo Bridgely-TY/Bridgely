@@ -1,10 +1,4 @@
-/**
- * Shared domain types for Bridgely.
- *
- * These model the core AAC concepts described in the product requirements:
- * communication boards made up of cells, where a cell either speaks a phrase
- * (speech cell) or navigates to another board (navigation cell).
- */
+// Shared domain types for Bridgely.
 
 /** Supported grid layouts for a board (per PRD: 2x2, 3x3, 4x4, 5x5). */
 export type GridSize = '2x2' | '3x3' | '4x4' | '5x5';
@@ -14,36 +8,28 @@ export type CellType = 'speech' | 'navigation';
 
 /** A single communication cell within a board. */
 export interface Cell {
-  id: string;
-  type: CellType;
-  /** Short text label shown on the cell. */
-  label: string;
-  /** Phrase spoken aloud when tapped (speech cells). */
-  spokenPhrase?: string;
-  /** Board this cell navigates to when tapped (navigation cells). */
-  destinationBoardId?: string;
-  /** Optional grouping category, e.g. "Food/Drink". */
-  category?: string;
-  /** Optional accent color (must not be the only way meaning is conveyed). */
-  color?: string;
-  /** Optional image/icon reference (asset key or uri). */
-  image?: string;
-  /** Whether the cell is hidden without being deleted. */
-  hidden?: boolean;
+  id: string; // Cell ID
+  type: CellType; // either "speech" or "navigation"
+  label: string; // display text on the cell
+  spokenPhrase?: string; // phrase spoken when cell is pressed (SPEECH ONLY)
+  destinationBoardId?: string; // destination board when cell is pressed (NAVIGATION ONLY)
+  category?: string; // for colour
+  colour?: string; // background colour of cell
+  image?: string; // icon URL for cell
+  hidden?: boolean; // whether the cell is hidden (for seasonal cells)
+  position: number; // the cell's grid location (0-indexed, left-to-right, top-to-bottom)
 }
 
 /** A communication board containing a grid of cells. */
 export interface Board {
-  id: string;
-  name: string;
-  /** Optional icon/image reference for the board. */
-  icon?: string;
-  gridSize: GridSize;
-  cells: Cell[];
-  /** Prebuilt starter boards vs. caregiver-created custom boards. */
-  isStarter?: boolean;
-  /** The fixed calm/urgent needs board that is always accessible. */
-  isUrgent?: boolean;
+  id: string; // Board ID
+  name: string; // name of board
+  icon?: string; // icon URL for board
+  gridSize: GridSize; // board dimensions
+  cells: Cell[]; // cells on board
+  isStarter?: boolean; // whether this is a started board (for new users)
+  position: number; // the board's location (0-indexed, left-to-right, top-to-bottom)
+  hidden: boolean; // whether the board is hidden (for seasonal boards)
 }
 
 /** Which mode the app is currently operating in. */
