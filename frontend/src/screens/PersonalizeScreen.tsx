@@ -34,7 +34,9 @@ const SENSORY_OPTIONS = [
  * Collects favourites, things to avoid, sensory/display presets, and free notes.
  * Front-end only — state is held locally; no persistence.
  */
-export default function PersonalizeScreen({ navigation }: ScreenProps<'Personalize'>) {
+export default function PersonalizeScreen({ navigation, route }: ScreenProps<'Personalize'>) {
+  const DEV_CHILD_ID = '5849e960-85c4-48f2-b0e4-4e3066745305';
+  const childId = route.params?.childId ?? DEV_CHILD_ID;
   const [foods, setFoods] = useState<string[]>(['Pizza']);
   const [people, setPeople] = useState<string[]>([]);
   const [activities, setActivities] = useState<string[]>(ACTIVITY_OPTIONS);
@@ -186,8 +188,7 @@ export default function PersonalizeScreen({ navigation }: ScreenProps<'Personali
 
         <Pressable
           style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
-          onPress={() => navigation.navigate('Caregiver')}
-        >
+          onPress={() => navigation.navigate('Caregiver', { childId })}>
           <Text style={styles.ctaText}>Finish Setup</Text>
         </Pressable>
       </ScrollView>

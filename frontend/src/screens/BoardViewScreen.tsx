@@ -2,27 +2,28 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ScreenProps } from '../navigation/types';
 import { Board, Cell } from '../types';
-import { getBoard } from '../api/mockApi';
+import { getBoardWithCells, logUsageEvent } from '../../../backend';
 
-/**
- * Board view (placeholder) — the child-facing communication grid.
- *
- * Renders the board's visible cells as large buttons. Speech cells will speak
- * their phrase (TTS wired later); navigation cells open the destination board.
- */
+// Board view screen. Displays a board's cells in a grid. Tapping a cell either navigates to another board 
+// (if it's a navigation cell) or triggers TTS (if it's a speech cell).
 export default function BoardViewScreen({ route, navigation }: ScreenProps<'BoardView'>) {
-  const { boardId } = route.params;
+  const { boardId, childId } = route.params;
   const [board, setBoard] = useState<Board | null>(null);
 
   useEffect(() => {
-    getBoard(boardId).then(setBoard);
+    getBoardWithCells(boardId)
+      .then(setBoard)
+      .catch((err) => console.warn('[Bridgely] Failed to load board:', err));
   }, [boardId]);
 
   const onCellPress = (cell: Cell) => {
-    if (cell.type === 'navigation' && cell.destinationBoardId) {
-      navigation.push('BoardView', { boardId: cell.destinationBoardId });
+    if (board) {
+      logUsageEvent(childId, cell.id, board.id);   // fire-and-forget, on EVERY tap
     }
-    // Speech cells will trigger text-to-speech in a later task.
+    if (cell.type === 'navigation' && cell.destinationBoardId) {
+      navigation.push('BoardView', { boardId: cell.destinationBoardId, childId });
+    }
+    // speech cells: TTS wired in a later task
   };
 
   if (!board) {

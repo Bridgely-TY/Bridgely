@@ -2,21 +2,18 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { ScreenProps } from '../navigation/types';
 import { Board, Cell } from '../types';
-import { getBoard } from '../api/mockApi';
+import { getBoardWithCells } from '../../../backend'; 
 
-/**
- * Board editor (placeholder) — caregiver-facing.
- *
- * Lists the board's cells and links to the cell editor. Real implementation
- * will support add/edit/delete/reorder, grid size, and hide/show.
- */
+// Board editor screen. Allows editing of a board's name, icon, grid size, and cells.
 export default function BoardEditorScreen({ route, navigation }: ScreenProps<'BoardEditor'>) {
   const { boardId } = route.params;
   const [board, setBoard] = useState<Board | null>(null);
 
-  useEffect(() => {
+    useEffect(() => {
     if (boardId) {
-      getBoard(boardId).then(setBoard);
+      getBoardWithCells(boardId)
+        .then(setBoard)
+        .catch((err) => console.warn('[Bridgely] Failed to load board:', err));
     }
   }, [boardId]);
 

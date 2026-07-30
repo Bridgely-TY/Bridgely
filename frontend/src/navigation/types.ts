@@ -1,20 +1,17 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-/**
- * Route param list for the root stack navigator.
- *
- * Covers the six routes required by FE-1: onboarding, caregiver mode,
- * child mode, board view, board editor, and cell editor.
- */
+// navigation types for each screen + their parameters.
+// this checks that the correct parameters are passed to each screen when navigating to it, 
+// and that the correct parameters are received. 
 export type RootStackParamList = {
   Onboarding: undefined;
   ChildProfile: undefined;
   DailyCommunication: undefined;
-  Personalize: undefined;
-  Caregiver: undefined;
-  Child: undefined;
-  BoardView: { boardId: string };
-  BoardEditor: { boardId?: string };
+  Personalize: { childId?: string } | undefined;
+  Caregiver: { childId: string };
+  Child: { childId: string };
+  BoardView: { boardId: string; childId: string };
+  BoardEditor: { boardId?: string; childId: string };
   CellEditor: { boardId: string; cellId?: string };
 };
 

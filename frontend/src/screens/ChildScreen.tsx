@@ -2,37 +2,30 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { ScreenProps } from '../navigation/types';
 import { Board } from '../types';
-import { getBoards } from '../api/mockApi';
+import { getBoardsForChild } from '../../../backend';
 
-/**
- * Child mode entry (placeholder).
- *
- * Opens the home board in a simple, low-distraction view. The urgent needs
- * board is always one tap away, per the PRD.
- */
-export default function ChildScreen({ navigation }: ScreenProps<'Child'>) {
+// Child mode (placeholder). Displays the home board and urgent needs board for a given 
+// child ID.
+export default function ChildScreen({ navigation, route }: ScreenProps<'Child'>) {
+  const { childId } = route.params;
   const [homeBoardId, setHomeBoardId] = useState<string | null>(null);
-  const [urgentBoardId, setUrgentBoardId] = useState<string | null>(null);
 
   useEffect(() => {
-    getBoards().then((boards: Board[]) => {
-      setHomeBoardId((boards.find((b) => b.id === 'home') ?? boards[0])?.id ?? null);
-      setUrgentBoardId(boards.find((b) => b.isUrgent)?.id ?? null);
-    });
-  }, []);
+    getBoardsForChild(childId)
+      .then((boards) => {
+        const visible = boards.filter((b) => !b.hidden);  
+        setHomeBoardId(visible[0]?.id ?? null);
+      })
+      .catch((err) => console.warn('[Bridgely] Failed to load boards:', err));
+  }, [childId]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Child Mode</Text>
 
       {homeBoardId && (
-        <Pressable style={styles.button} onPress={() => navigation.navigate('BoardView', { boardId: homeBoardId })}>
+        <Pressable style={styles.button} onPress={() => navigation.navigate('BoardView', { boardId: homeBoardId, childId })}>
           <Text style={styles.buttonText}>Open Home Board</Text>
-        </Pressable>
-      )}
-      {urgentBoardId && (
-        <Pressable style={[styles.button, styles.urgent]} onPress={() => navigation.navigate('BoardView', { boardId: urgentBoardId })}>
-          <Text style={styles.buttonText}>Calm / Urgent Needs</Text>
         </Pressable>
       )}
     </View>

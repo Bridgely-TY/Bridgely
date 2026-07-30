@@ -2,20 +2,18 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
 import { ScreenProps } from '../navigation/types';
 import { Board } from '../types';
-import { getBoards } from '../api/mockApi';
+import { getBoardsForChild } from '../../../backend'; 
 
-/**
- * Caregiver mode (placeholder dashboard).
- *
- * Lists all boards and provides entry points to edit boards/cells and preview
- * Child Mode. Real implementation will add lock-editing, hide/show, reordering.
- */
-export default function CaregiverScreen({ navigation }: ScreenProps<'Caregiver'>) {
+// using backend functions to fetch boards for a given child ID
+export default function CaregiverScreen({ navigation, route }: ScreenProps<'Caregiver'>) {
+  const { childId } = route.params;
   const [boards, setBoards] = useState<Board[]>([]);
 
   useEffect(() => {
-    getBoards().then(setBoards);
-  }, []);
+    getBoardsForChild(childId)
+      .then(setBoards)
+      .catch((err) => console.warn('[Bridgely] Failed to load boards:', err));
+  }, [childId]);
 
   return (
     <View style={styles.container}>
@@ -26,17 +24,17 @@ export default function CaregiverScreen({ navigation }: ScreenProps<'Caregiver'>
         keyExtractor={(b) => b.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <Pressable style={styles.row} onPress={() => navigation.navigate('BoardEditor', { boardId: item.id })}>
+          <Pressable style={styles.row} onPress={() => navigation.navigate('BoardEditor', { boardId: item.id, childId })}>
             <Text style={styles.rowText}>{item.name}</Text>
             <Text style={styles.rowMeta}>{item.gridSize}</Text>
           </Pressable>
         )}
       />
 
-      <Pressable style={styles.button} onPress={() => navigation.navigate('BoardEditor', {})}>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('BoardEditor', { childId })}>
         <Text style={styles.buttonText}>Add New Board</Text>
       </Pressable>
-      <Pressable style={[styles.button, styles.secondary]} onPress={() => navigation.navigate('Child')}>
+      <Pressable style={[styles.button, styles.secondary]} onPress={() => navigation.navigate('Child', { childId } )}>
         <Text style={styles.buttonText}>Preview Child Mode</Text>
       </Pressable>
     </View>
