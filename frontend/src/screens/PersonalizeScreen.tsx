@@ -46,7 +46,6 @@ export default function PersonalizeScreen({ navigation, route }: ScreenProps<'Pe
   const [customActivity, setCustomActivity] = useState('');
   const [avoid, setAvoid] = useState<string[]>(['Small buttons']);
   const [sensory, setSensory] = useState<string[]>(['Bigger Buttons', 'Simplified Layout']);
-  const [notes, setNotes] = useState('');
 
   const addTag = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
     (value: string) => setter((prev) => (prev.includes(value) ? prev : [...prev, value]));
@@ -185,30 +184,6 @@ export default function PersonalizeScreen({ navigation, route }: ScreenProps<'Pe
               />
             ))}
           </View>
-
-          {/* Anything Else */}
-          <View style={styles.fieldSpacer} />
-          <View style={styles.labelWrap}>
-            <Text style={styles.label}>
-              Anything Else We Should Know? <Text style={styles.optional}>(Optional)</Text>
-            </Text>
-            <Text style={styles.helperAlert}>
-              Share anything about how your child communicates, what motivates them, or what
-              helps them feel comfortable.
-            </Text>
-            <Text style={styles.helper}>
-              e.g. 'She responds well to songs', 'He uses the word more a lot', 'Prefers pictures over text'
-            </Text>
-          </View>
-          <TextInput
-            style={styles.textArea}
-            placeholder="e.g. She calms down with music, He already says 'more' and 'no', Responds best to pictures..."
-            placeholderTextColor={colors.placeholder}
-            value={notes}
-            onChangeText={setNotes}
-            multiline
-            textAlignVertical="top"
-          />
         </View>
 
         <Pressable
@@ -275,7 +250,6 @@ const styles = StyleSheet.create({
 
   labelWrap: { marginBottom: 10 },
   label: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
-  optional: { color: colors.accentBlue, fontWeight: '700' },
   helper: { fontSize: 13, color: colors.textSecondary, marginTop: 3 },
   helperAlert: { fontSize: 13, color: colors.helperAlert, fontWeight: '600', marginTop: 3, lineHeight: 18 },
   helperBlue: { fontSize: 13, color: colors.accentBlue, fontWeight: '600', marginTop: 3 },
@@ -289,17 +263,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.textPrimary,
     backgroundColor: colors.card,
-  },
-  textArea: {
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    fontSize: 15,
-    color: colors.textPrimary,
-    backgroundColor: colors.card,
-    minHeight: 110,
   },
 
   chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 12 },

@@ -68,7 +68,6 @@ export default function ChildProfileScreen({ navigation }: ScreenProps<'ChildPro
   const [otherDiagnosis, setOtherDiagnosis] = useState('');
   const [interaction, setInteraction] = useState('One Finger');
   const [vision, setVision] = useState<'No' | 'Yes'>('No');
-  const [hearing, setHearing] = useState<'No' | 'Yes'>('No');
 
   const addLanguage = (value: string) => {
     if (!languages.includes(value)) {
@@ -253,25 +252,20 @@ export default function ChildProfileScreen({ navigation }: ScreenProps<'ChildPro
             ))}
           </View>
 
-          {/* Impairments */}
+          {/* Vision impairment */}
           <View style={styles.fieldSpacer} />
-          <View style={styles.impairmentRow}>
-            <View style={styles.impairmentCol}>
-              <Text style={styles.impairmentLabel}>Vision Impairment?</Text>
-              <YesNoToggle value={vision} onChange={setVision} />
-            </View>
-            <View style={styles.impairmentCol}>
-              <Text style={styles.impairmentLabel}>Hearing Impairment?</Text>
-              <YesNoToggle value={hearing} onChange={setHearing} />
-            </View>
-          </View>
+          <FieldLabel
+            label="Vision Impairment?"
+            helper="This means low vision, not full blindness."
+          />
+          <YesNoToggle value={vision} onChange={setVision} />
         </View>
 
         <Pressable
           style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
           onPress={() => navigation.navigate('DailyCommunication')}
         >
-          <Text style={styles.ctaText}>Continue to Step 3</Text>
+          <Text style={styles.ctaText}>Continue to Step 2</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -431,9 +425,6 @@ const styles = StyleSheet.create({
 
   chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 12 },
 
-  impairmentRow: { flexDirection: 'row', gap: 16 },
-  impairmentCol: { flex: 1 },
-  impairmentLabel: { fontSize: 16, fontWeight: '700', color: colors.textPrimary, marginBottom: 12 },
   toggleRow: { flexDirection: 'row', gap: 12 },
   toggle: {
     flex: 1,
