@@ -11,6 +11,8 @@ export type RootStackParamList = {
   ChildProfile: undefined;
   DailyCommunication: undefined;
   Personalize: undefined;
+  CommunicationHub: undefined;
+  CommunicationBoard: { categoryId: string };
   Caregiver: undefined;
   Child: undefined;
   BoardView: { boardId: string };
