@@ -112,9 +112,9 @@ Caregiver Mode should be easy enough for a non-technical adult to use.
 
 ## 5. Communication Board Requirements
 
-### A. Starter Boards
+### A. Starter & Core Vocabulary Boards
 
-Bridgely should come with prebuilt boards so the user is not starting from zero.
+Bridgely should come with prebuilt boards so the user is not starting from zero. This includes a simple core vocabulary board with flexible words that can be used across many situations.
 
 Minimum starter boards:
 - Home
@@ -127,13 +127,7 @@ Minimum starter boards:
 - Activities
 - Yes / No / Help / Stop / More
 
----
-
-### B. Core Vocabulary Board
-
-The app should include a simple core vocabulary board with flexible words that can be used across many situations.
-
-Examples:
+Core vocabulary examples (flexible words usable across many situations):
 - I
 - want
 - go
@@ -156,7 +150,7 @@ This is important because the app should support more than basic requests. The c
 
 ---
 
-### C. Custom Boards
+### B. Custom Boards
 
 Caregivers must be able to create custom boards for specific routines and contexts.
 
@@ -177,7 +171,7 @@ Each custom board should support:
 - Board icon or image
 - Grid size
 - Custom cells
-- Optional color/category grouping
+- Optional color grouping
 - Text-to-speech phrase per cell
 - Navigation to other boards
 
@@ -189,15 +183,13 @@ Each communication cell should contain:
 - Image, symbol, or uploaded photo
 - Text label
 - Spoken output phrase
-- Optional category
-- Optional color
+- Optional color (every cell is assigned a default color, which the caregiver can override)
 - Optional destination board link
 
 Example:
 
 Cell label: **Water**  
 Spoken phrase: **I want water.**  
-Category: **Food/Drink**  
 Image: Glass of water
 
 ### Cell Types
@@ -271,7 +263,7 @@ Buttons should be large enough for users with motor difficulties, stress-related
 Practical requirement:
 - Minimum tap target: 44px x 44px
 - Preferred AAC cell size should be much larger, especially on tablets
-- Grid options should include 2x2, 3x3, 4x4, and 5x5
+- Any grid shape or size is acceptable; the current designs use square grids (e.g., 2x2, 3x3, 4x4, 5x5) for simplicity and ease of layout
 
 ---
 
@@ -359,6 +351,8 @@ Minimum onboarding flow:
 The setup should take under 5 minutes for a basic version.
 
 Avoid asking too many questions at the beginning.
+
+On first open, onboarding choices should have no default pre-selected options—nothing should be highlighted until the caregiver makes a selection.
 
 ---
 
