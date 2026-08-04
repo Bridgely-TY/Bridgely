@@ -186,7 +186,7 @@ export default function PersonalizeScreen({ navigation }: ScreenProps<'Personali
 
         <Pressable
           style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
-          onPress={() => navigation.navigate('Caregiver')}
+          onPress={() => navigation.navigate('CommunicationHub')}
         >
           <Text style={styles.ctaText}>Finish Setup</Text>
         </Pressable>
