@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -20,6 +19,12 @@ import type { ScreenProps } from '../navigation/types';
 export default function CommunicationHubScreen({
   navigation,
 }: ScreenProps<'CommunicationHub'>) {
+  // Group categories into rows of two so the grid can fill the page vertically.
+  const rows: (typeof CATEGORIES)[] = [];
+  for (let i = 0; i < CATEGORIES.length; i += 2) {
+    rows.push(CATEGORIES.slice(i, i + 2));
+  }
+
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.topBar}>
@@ -35,40 +40,46 @@ export default function CommunicationHubScreen({
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         <Text style={styles.title}>Let's Talk</Text>
         <Text style={styles.subtitle}>Tap a category to start talking</Text>
 
         <View style={styles.grid}>
-          {CATEGORIES.map((cat) => (
-            <Pressable
-              key={cat.id}
-              onPress={() =>
-                navigation.navigate('CommunicationBoard', { categoryId: cat.id })
-              }
-              accessibilityRole="button"
-              accessibilityLabel={`${cat.name}, ${cat.cells.length} words`}
-              style={({ pressed }) => [
-                styles.card,
-                { backgroundColor: cat.palette.cardBg },
-                pressed && styles.pressed,
-              ]}
-            >
-              <View style={styles.iconCircle}>
-                <MaterialCommunityIcons
-                  name={
-                    cat.hubIcon as React.ComponentProps<typeof MaterialCommunityIcons>['name']
+          {rows.map((row, rowIndex) => (
+            <View key={`row-${rowIndex}`} style={styles.row}>
+              {row.map((cat) => (
+                <Pressable
+                  key={cat.id}
+                  onPress={() =>
+                    navigation.navigate('CommunicationBoard', { categoryId: cat.id })
                   }
-                  size={30}
-                  color={cat.palette.accent}
-                />
-              </View>
-              <Text style={styles.cardTitle}>{cat.pill}</Text>
-              <Text style={styles.cardCount}>{cat.cells.length} words</Text>
-            </Pressable>
+                  accessibilityRole="button"
+                  accessibilityLabel={`${cat.name}, ${cat.cells.length} words`}
+                  style={({ pressed }) => [
+                    styles.card,
+                    { backgroundColor: cat.palette.cardBg },
+                    pressed && styles.pressed,
+                  ]}
+                >
+                  <View style={styles.iconCircle}>
+                    <MaterialCommunityIcons
+                      name={
+                        cat.hubIcon as React.ComponentProps<
+                          typeof MaterialCommunityIcons
+                        >['name']
+                      }
+                      size={38}
+                      color={cat.palette.accent}
+                    />
+                  </View>
+                  <Text style={styles.cardTitle}>{cat.pill}</Text>
+                  <Text style={styles.cardCount}>{cat.cells.length} words</Text>
+                </Pressable>
+              ))}
+            </View>
           ))}
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -98,8 +109,9 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   content: {
+    flex: 1,
     paddingHorizontal: 24,
-    paddingBottom: 32,
+    paddingBottom: 24,
   },
   title: {
     fontSize: 28,
@@ -114,37 +126,41 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   grid: {
+    flex: 1,
+    gap: 16,
+  },
+  row: {
+    flex: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    rowGap: 16,
+    gap: 16,
   },
   card: {
-    width: '48%',
+    flex: 1,
     borderRadius: 22,
     paddingVertical: 24,
     paddingHorizontal: 18,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   iconCircle: {
-    width: 62,
-    height: 62,
-    borderRadius: 31,
+    width: 84,
+    height: 84,
+    borderRadius: 42,
     backgroundColor: colors.card,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 14,
+    marginBottom: 18,
   },
   cardTitle: {
-    fontSize: 17,
+    fontSize: 22,
     fontWeight: '800',
     color: colors.textPrimary,
     textAlign: 'center',
   },
   cardCount: {
-    fontSize: 14,
+    fontSize: 16,
     color: colors.textSecondary,
-    marginTop: 4,
+    marginTop: 6,
   },
   pressed: {
     opacity: 0.75,
