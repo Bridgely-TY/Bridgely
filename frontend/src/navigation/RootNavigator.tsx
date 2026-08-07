@@ -9,6 +9,10 @@ import PersonalizeScreen from '../screens/PersonalizeScreen';
 import CommunicationHubScreen from '../screens/CommunicationHubScreen';
 import CommunicationBoardScreen from '../screens/CommunicationBoardScreen';
 import CaregiverScreen from '../screens/CaregiverScreen';
+import CaregiverProfileScreen from '../screens/CaregiverProfileScreen';
+import ChildModeSettingsScreen from '../screens/ChildModeSettingsScreen';
+import EditOnboardingScreen from '../screens/EditOnboardingScreen';
+import BoardManagerScreen from '../screens/BoardManagerScreen';
 import ChildScreen from '../screens/ChildScreen';
 import BoardViewScreen from '../screens/BoardViewScreen';
 import BoardEditorScreen from '../screens/BoardEditorScreen';
@@ -30,7 +34,11 @@ export default function RootNavigator() {
         <Stack.Screen name="Personalize" component={PersonalizeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="CommunicationHub" component={CommunicationHubScreen} options={{ headerShown: false }} />
         <Stack.Screen name="CommunicationBoard" component={CommunicationBoardScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Caregiver" component={CaregiverScreen} options={{ title: 'Caregiver' }} />
+        <Stack.Screen name="Caregiver" component={CaregiverScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="CaregiverProfile" component={CaregiverProfileScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ChildModeSettings" component={ChildModeSettingsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="EditOnboarding" component={EditOnboardingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="BoardManager" component={BoardManagerScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Child" component={ChildScreen} options={{ title: 'Child Mode' }} />
         <Stack.Screen name="BoardView" component={BoardViewScreen} options={{ title: 'Board' }} />
         <Stack.Screen name="BoardEditor" component={BoardEditorScreen} options={{ title: 'Edit Board' }} />

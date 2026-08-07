@@ -32,8 +32,9 @@ export default function CommunicationHubScreen({
         <Text style={styles.brand}>Bridgely</Text>
         <View style={styles.spacer} />
         <Pressable
+          onPress={() => navigation.navigate('Caregiver')}
           accessibilityRole="button"
-          accessibilityLabel="Settings"
+          accessibilityLabel="Open caregiver settings"
           style={({ pressed }) => [styles.gear, pressed && styles.pressed]}
         >
           <MaterialCommunityIcons name="cog-outline" size={24} color={colors.textSecondary} />

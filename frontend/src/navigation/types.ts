@@ -14,6 +14,10 @@ export type RootStackParamList = {
   CommunicationHub: undefined;
   CommunicationBoard: { categoryId: string };
   Caregiver: undefined;
+  CaregiverProfile: undefined;
+  ChildModeSettings: undefined;
+  EditOnboarding: undefined;
+  BoardManager: undefined;
   Child: undefined;
   BoardView: { boardId: string };
   BoardEditor: { boardId?: string };
